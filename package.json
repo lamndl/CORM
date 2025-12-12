@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "chess.js": "^0.13.1",
+    "chessboardjsx": "^2.4.7",
+    "js-chess-engine": "^1.0.2",
+    "react-chessboard": "^5.8.6",
+    "react-chessboard-ui": "^1.4.7",
+    "react-chessground": "^1.5.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-fen-chess-board": "^2.0.6"
+  }
+}

@@ -118,8 +118,11 @@ func (m *RepertoireManager) GetCurrentWinrates() (PositionWinrate, error) {
 		return PositionWinrate{}, fmt.Errorf("no current FEN set")
 
 	}
-	
-	data, err := FetchExplorerData(fen)
+	elo, err := m.GetCurrentElo()
+	if err != nil {
+		return PositionWinrate{}, fmt.Errorf("failed to get current elo: %w", err)
+	}
+	data, err := FetchExplorerData(fen, elo)
 	if err != nil {
 		return PositionWinrate{}, err
 	}
@@ -370,7 +373,7 @@ func (m *RepertoireManager) TestCurrentPosition(moveSAN string) error {
 		if updateErr != nil {
 			return fmt.Errorf("failed to demote Leitner box: %w", updateErr)
 		}
-		return fmt.Errorf("incorrect move")
+		return fmt.Errorf("incorrect move, correct move is: %s", childFEN)
 	} else if err != nil {
 		return fmt.Errorf("failed to validate move: %w", err)
 	}
@@ -448,4 +451,21 @@ func (m *RepertoireManager) GetCurrentRepCoverage() (float64, error) {
 		return 0.0, fmt.Errorf("failed to get repertoire coverage: %w", err)
 	}
 	return 100.0 / float64(coverage), nil
+}
+
+// Added a method to get the current repertoire's elo rating.
+func (m *RepertoireManager) GetCurrentElo() (int, error) {
+	if m.selectedRep == 0 {
+		return 0, fmt.Errorf("no repertoire selected")
+	}
+
+	var elo int
+	err := m.db.QueryRowContext(context.Background(),
+		`SELECT elo FROM repertoire WHERE id = ?`,
+		m.selectedRep).Scan(&elo)
+	if err != nil {
+		return 0, fmt.Errorf("failed to get repertoire elo: %w", err)
+	}
+
+	return elo, nil
 }

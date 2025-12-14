@@ -22,6 +22,10 @@ export function DeleteEdge(arg1) {
   return window['go']['backend']['RepertoireManager']['DeleteEdge'](arg1);
 }
 
+export function GetCurrentElo() {
+  return window['go']['backend']['RepertoireManager']['GetCurrentElo']();
+}
+
 export function GetCurrentFEN() {
   return window['go']['backend']['RepertoireManager']['GetCurrentFEN']();
 }

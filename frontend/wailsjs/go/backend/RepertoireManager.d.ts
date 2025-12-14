@@ -12,6 +12,8 @@ export function Delete(arg1:number):Promise<void>;
 
 export function DeleteEdge(arg1:string):Promise<void>;
 
+export function GetCurrentElo():Promise<number>;
+
 export function GetCurrentFEN():Promise<string>;
 
 export function GetCurrentID():Promise<number>;

@@ -131,7 +131,7 @@ export default function Repertoires({ onSelect, onResetFen, setRefreshRepertoire
     }
 
     return (
-        <div>
+        <div style={{ color: "green" }}>
             {loading && <p>Loading...</p>}
             {error && <p style={{ color: "red" }}>{error}</p>}
 
